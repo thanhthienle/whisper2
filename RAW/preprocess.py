@@ -45,12 +45,12 @@ for line in data:
     elif prob < 0.9:
         original_path = os.path.join(audio_path, obj["id"] + ".wav")
         des_path = os.path.join(root, "RAW/data/RAW/dev/waves/RAWTEST", "_" + obj["id"] + ".wav")
-        # shutil.move(original_path, des_path)
+        shutil.move(original_path, des_path)
         write_obj(obj, dev_writer, "_")
         dev_count += 1
     else:
         original_path = os.path.join(audio_path, obj["id"] + ".wav")
         des_path = os.path.join(root, "RAW/data/RAW/test/waves/RAWTEST", "_" + obj["id"] + ".wav")
-        # shutil.move(original_path, des_path)
+        shutil.move(original_path, des_path)
         write_obj(obj, test_writer, "_")
         test_count += 1
