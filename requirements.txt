@@ -5,3 +5,4 @@ librosa
 jiwer
 evaluate >= 0.30
 git+https://github.com/huggingface/transformers
+audiomentations
