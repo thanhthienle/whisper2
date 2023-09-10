@@ -3,6 +3,6 @@ torch >= 1.5
 torchaudio
 librosa
 jiwer
-evaluate >= 0.30
+evaluate >= 0.3
 git+https://github.com/huggingface/transformers
 audiomentations

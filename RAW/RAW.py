@@ -130,7 +130,6 @@ class RAWDataset(datasets.GeneratorBasedBuilder):
                 # speaker_id = data[0].split("_")[0]
                 audio_path = "/".join([path_to_clips, parentfolder, filename + ".wav"])
                 examples[audio_path] = {
-                    # "speaker_id": speaker_id,
                     "path": audio_path,
                     "sentence": data[1],
                 }
