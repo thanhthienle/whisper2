@@ -8,5 +8,5 @@ echo "Done unzip and move"
 python RAW/preprocess.py
 echo "Done preprocess"
 gzip RAW/data/prompts-*
-tar -czf "RAW/data/RAW.tar.gz" RAW/data/RAW
+tar -C RAW/data -czf "RAW/data/RAW.tar.gz" RAW
 echo "Done zipping"
