@@ -5,6 +5,8 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
 import string
 
+import re
+import random
 import datasets
 import evaluate
 import torch
@@ -256,6 +258,47 @@ class DataCollatorSpeechSeq2SeqWithPadding:
 
 
 # Functions
+PATTERN = r'\d+'
+BASIC = {1: "một", 2: "hai", 3: "ba", 4: "bốn", 5: "năm", 6: "sáu", 7: "bảy", 8: "tám", 9: "chín", 10: "mười"}
+
+def num_to_text(num: int):
+    if num in BASIC:
+        return BASIC[num]
+    
+    chuc = num // 10
+    donvi = num % 10
+    if chuc == 1:
+        return "mười " + BASIC[donvi]
+    else:
+        first = BASIC[chuc]
+        prob = random.uniform(0, 1)
+        if prob < 0.5:
+            middle = " "
+        else:
+            middle = " mươi "
+        if donvi == 4:
+            another_prob = random.uniform(0,1)
+            if another_prob < 0.5:
+                final = "bốn"
+            else:
+                final = "tư"
+        elif donvi == 1:
+            final = "mốt"
+        else: final = BASIC[donvi]
+        return first + middle + final
+
+def num_convert(sentence):
+    match = re.finditer(PATTERN, sentence)
+    lech = 0
+    for something in match:
+        start, end = something.span()
+        word = sentence[start+lech:end+lech]
+        num = int(word)
+        sentence = sentence.replace(word, num_to_text(num))
+        lech += len(num_to_text(num)) - len(word)
+    sentence = sentence.replace("%", " phần trăm")
+    return sentence
+
 def remove_punctuations_and_spaces(text):
     text = text.translate(str.maketrans("", "", string.punctuation))
     text = " ".join(text.split()).lower()
@@ -265,7 +308,7 @@ def remove_punctuations_and_spaces(text):
             text = text + "."
     except:
         pass
-    return text
+    return num_convert(text)
 
 augment_waveform = Compose([
     AddGaussianNoise(min_amplitude=0.005, max_amplitude=0.015, p=0.2),
