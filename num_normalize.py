@@ -4,7 +4,7 @@ import re
 
 # Functions
 PATTERN = r'\d+'
-BASIC = {1: "một", 2: "hai", 3: "ba", 4: "bốn", 5: "năm", 6: "sáu", 7: "bảy", 8: "tám", 9: "chín", 10: "mười"}
+BASIC = {0: "không", 1: "một", 2: "hai", 3: "ba", 4: "bốn", 5: "năm", 6: "sáu", 7: "bảy", 8: "tám", 9: "chín", 10: "mười"}
 
 def num_to_text(num: int):
     if num in BASIC:
