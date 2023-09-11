@@ -1,5 +1,7 @@
 import logging
 import os
+import re
+import random
 import sys
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Union
@@ -26,6 +28,7 @@ from transformers.trainer_utils import get_last_checkpoint, is_main_process
 from transformers.utils import check_min_version, send_example_telemetry
 from transformers.utils.versions import require_version
 
+from num_normalize import num_convert
 
 # Will error if the minimal version of Transformers is not installed. Remove at your own risks.
 check_min_version("4.31.0.dev0")
@@ -254,7 +257,7 @@ def remove_punctuations_and_spaces(text):
             text = text + "."
     except:
         pass
-    return text
+    return num_convert(text)
 
 
 def main():
