@@ -3,4 +3,3 @@ RAW/train.jsonl
 RAW/data
 noises
 noises/*
-raw_run.sh
