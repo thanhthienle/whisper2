@@ -12,9 +12,7 @@ def num_to_text(num: int):
     
     chuc = num // 10
     donvi = num % 10
-    if chuc == 0:
-        return BASIC[donvi]
-    elif chuc == 1:
+    if chuc == 1:
         return "mười " + BASIC[donvi]
     else:
         first = BASIC[chuc]
