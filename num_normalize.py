@@ -16,39 +16,60 @@ def num_to_text(num: int):
         return "mười " + BASIC[donvi]
     else:
         first = BASIC[chuc]
-        if donvi == 0:
-            return first + " mươi"
         prob = random.uniform(0, 1)
         if prob < 0.5:
-            middle = " " 
+            middle = " "
         else:
             middle = " mươi "
         if donvi == 4:
-            another_prob = random.uniform(0, 1)
+            another_prob = random.uniform(0,1)
             if another_prob < 0.5:
-                final = "bốn" 
+                final = "bốn"
             else:
                 final = "tư"
         elif donvi == 1:
             final = "mốt"
         elif donvi == 5:
-            final = "lăm"
+          final = 'lăm'
+        elif donvi == 0:
+          if middle == ' mươi ':
+            final = ''
+            middel  = ' mươi'
+          else:
+            final = 'mươi'
         else: final = BASIC[donvi]
         return first + middle + final
 
 def num_convert(sentence):
+
     match = re.finditer(PATTERN, sentence)
     lech = 0
+
     for something in match:
+
         start, end = something.span()
+        # print(start, end)
         word = sentence[start+lech:end+lech]
+        
         num = int(word)
-        sentence = sentence.replace(word, num_to_text(num))
-        lech += len(num_to_text(num)) - len(word)
+        text_num = num_to_text(num)
+        sentence = sentence.replace(word, text_num, 1)
+        lech += len(text_num) - len(word)
     sentence = sentence.replace("%", " phần trăm")
+
     return sentence
 
-
+def remove_punctuations_and_spaces(text):
+    text = text.translate(str.maketrans("", "", string.punctuation))
+    text = " ".join(text.split()).lower()
+    text = text.replace('"', '')
+    try:
+        if text[-1] not in [".", "?", "!"]:
+            text = text + "."
+    except:
+        pass
+    return num_convert(text)
+    
 if __name__ == "__main__":
     for split in ["train", "dev", "test"]:
         with open(f"RAW/data/promtps-{split}.txt", "r") as file:
