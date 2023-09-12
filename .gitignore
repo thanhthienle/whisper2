@@ -3,3 +3,4 @@ RAW/train.jsonl
 RAW/data
 noises
 noises/*
+__pycache__

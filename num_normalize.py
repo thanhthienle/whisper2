@@ -9,7 +9,7 @@ BASIC = {0: "không", 1: "một", 2: "hai", 3: "ba", 4: "bốn", 5: "năm", 6: "
 def num_to_text(num: int):
     if num in BASIC:
         return BASIC[num]
-    
+
     chuc = num // 10
     donvi = num % 10
     if chuc == 1:
@@ -41,21 +41,17 @@ def num_to_text(num: int):
         return first + middle + final
 
 def num_convert(sentence):
-
+    sentence = sentence.replace("%", " phần trăm")
     match = re.finditer(PATTERN, sentence)
     lech = 0
 
     for something in match:
-
         start, end = something.span()
-        # print(start, end)
         word = sentence[start+lech:end+lech]
-        
         num = int(word)
         text_num = num_to_text(num)
         sentence = sentence.replace(word, text_num, 1)
         lech += len(text_num) - len(word)
-    sentence = sentence.replace("%", " phần trăm")
 
     return sentence
 
@@ -69,7 +65,7 @@ def remove_punctuations_and_spaces(text):
     except:
         pass
     return num_convert(text)
-    
+
 if __name__ == "__main__":
     for split in ["train", "dev", "test"]:
         with open(f"RAW/data/promtps-{split}.txt", "r") as file:
